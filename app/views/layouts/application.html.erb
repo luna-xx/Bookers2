@@ -6,41 +6,96 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+
+
+    <script src="https://kit.fontawesome.com/daac8c39ac.js" crossorigin="anonymous"></script>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <header>
-      <% if user_signed_in? %>
-      <li>
-        <%= link_to "Home",  %>
-      </li>
-      <li>
-        <%= link_to "Users",  %>
-      </li>
-      <li>
-        <%= link_to "Books",  %>
-      </li>
-      <li>
-        <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "Home",  %>
-      </li>
-      <li>
-        <%= link_to "About",  %>
-      </li>
-      <li>
-        <%= link_to "sign_up", new_user_registration_path %>
-      </li>
-      <li>
-        <%= link_to "Log in", new_user_session_path %>
-      </li>
-    <% end %>
+  <body class="d-flex flex-column vh-100">
+    <header class="shadow-sm">
+      <nav class="navbar navbar-dark bg-dark border-bottom">
+        <div class="container">
+          <%= link_to 'Bookers', root_path, class: 'navbar-brand' %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+
+            <% if user_signed_in? %>
+
+              <li class="nav-item">
+               <%= link_to users_path(current_user.id), class: 'nav-link text-white px-3' do %>
+               <i class="fa-solid fa-home">Home</i>
+               <% end %>
+              </li>
+
+              <li class="nav-item">
+               <%= link_to users_path, class: 'nav-link text-white px-3' do %>
+               <i class="fa-solid fa-users">Users</i>
+               <% end %>
+              </li>
+
+              <li class="nav-item">
+               <%= link_to books_path, class: 'nav-link text-white px-3' do %>
+               <i class="fa-solid fa-book-open">Books</i>
+               <% end %>
+              </li>
+
+              <li class="nav-item">
+               <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-white px-3' do %>
+               <i class="fa-solid fa-sign-out-alt">Log out</i>
+               <% end %>
+              </li>
+
+            <% else %>
+
+              <li>
+                <%= link_to root_path, class: 'px-3 text-white' do %>
+                <i class="fa-solid fa-home">Home</i>
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to about_path, class: 'px-3 text-white' do %>
+                <i class="fa-solid fa-link">About</i>
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to new_user_registration_path, class: 'px-3 text-white' do %>
+                <i class="fa-solid fa-sign-in-alt">Sign up</i>
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to new_user_session_path, class: 'px-3 text-white' do %>
+                <i class="fa-solid fa-user-plus">Log in</i>
+                <% end %>
+              </li>
+             <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
   </header>
-    </header>
-    <%= yield %>
+
+
+  <% flash.each do |message_type, message| %>
+    <div class="flash-message <%= message_type %>"><% message %></div>
+  <% end %>
+  <div class="container px-5 px-0">
+    <div class="row">
+      <%= yield %>
+    </div>
+  </div>
+
+  <footer class="mt-4">
+    <p class="text-conter">CopyRight Infratop.inc</p>
+  </footer>
   </body>
 </html>
