@@ -1,6 +1,8 @@
-<%= render 'layouts/sidebar' %>
+<%= render 'layouts/sidebar', user: @user, book: @book %>
 
 <div class="col-md-8 offset-md-1">
+
+
   <h2>Books</h2>
   <table class="table table-striped">
     <thead class="book-head">
@@ -21,7 +23,7 @@
         </td>
 
         <td>
-          <%= link_to user_path(book) do %>
+          <%= link_to book_path(book) do %>
           <% book.title %>
           <% end %>
         </td>

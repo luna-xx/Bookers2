@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="row no-gutters">
     <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto rounded px-0 my-5">
@@ -5,27 +6,40 @@
       <div class="form-body p-4">
 
         <% if @user.errors.any? %>
-        <ul class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert">
           <h6 class="alert-heading">
-            <%= @user.errors.count %>errors prohibited this book from being saved:
-          </h6>
-          <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-          <% end %>
-        </ul>
+            <%= pluralize(@user.errors.count, "error") %> prohibited this book from being saved:</h6>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
         <% end %>
+
+        <% if flash[:notice].present? %>
+          <div class="alert alert-success">
+            <%= flash[:notice] %>
+          </div>
+        <% end %>
+
         <%= form_with model: @user do |f| %>
+
         <p>Name</p>
-          <%= f.text_field :name, class:"form-control", placeholder:"name" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "name" %>
           <div class="input-group mb-3 mt-4">
             <div class="input-group-prepend"></div>
-            <p>Image</p>
-            <%= f.text_field :profile_image, accept: "image/*", class: "w-100" %>
           </div>
-          <p>Introduction</p>
+
+        <p>Image</p>
+          <%= f.file_field :profile_image, accept: "image/*", class: "w-100" %>
+
+
+        <p>Introduction</p>
           <%= f.text_area :introduction, class: "form-control", rows:"3", placeholder:"" %>
           <%= f.submit 'Update User', class: "btn btn-sm btn-info mt-4" %>
         <% end %>
+
       </div>
     </div>
   </div>

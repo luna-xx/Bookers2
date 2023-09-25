@@ -1,20 +1,27 @@
 class UsersController < ApplicationController
-  before_action :is_matching_login_user, only: [:edit, :update]
+     before_action :is_matching_login_user, only: [:edit, :update]
 
   def index
     @user = current_user
     @users = User.all
     @book = Book.new
+    @books = Book.all
   end
+
 
   def show
     @user = User.find(params[:id])
-    @books = @user.books
+    @books = Book.where(user_id: @user.id)
     @book = Book.new
   end
-
+  
   def edit
-    @user = current_user
+    @user = User.find(params[:id])
+    if @user == current_user
+      render "edit"
+    else
+      redirect_to user_path(current_user)
+    end
   end
 
   def update
@@ -24,10 +31,11 @@ class UsersController < ApplicationController
       redirect_to user_path(@user)
     else
       @user = current_user
-      flash.now[:alert] = "Profile was not updated successfully."
+      flash.now[:notice] = "Profile was not successfully update."
       render :edit
     end
   end
+
 
   private
 

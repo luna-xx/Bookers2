@@ -29,7 +29,7 @@
             <% if user_signed_in? %>
 
               <li class="nav-item">
-               <%= link_to users_path(current_user.id), class: 'nav-link text-white px-3' do %>
+               <%= link_to user_path(current_user), class: 'nav-link text-white px-3' do %>
                <i class="fa-solid fa-home">Home</i>
                <% end %>
               </li>
@@ -88,6 +88,13 @@
   <% flash.each do |message_type, message| %>
     <div class="flash-message <%= message_type %>"><% message %></div>
   <% end %>
+
+   <% if flash[:notice] %>
+     <p id="notice">
+       <%= flash[:notice] %>
+     </p>
+   <% end %>
+
   <div class="container px-5 px-0">
     <div class="row">
       <%= yield %>
